@@ -15,6 +15,12 @@ INCLUDE_FLAGS := \
 CFLAGS += $(INCLUDE_FLAGS)
 ASFLAGS += $(INCLUDE_FLAGS)
 
+# Include files to install.
+INCLUDES := $(wildcard include/*)
+
+# Place to install soc stuff.
+INCLUDE_INSTALL_PATH := $(SYSTEM_ROOT)/soc/include
+
 ###############################################################################
 # Config Generator
 ###############################################################################
@@ -36,6 +42,16 @@ OBJECTS := $(foreach object, stm32.o usart.o gpio.o spi.o, \
 all:	$(SOC_OBJ_DIR) $(OBJECTS)
 
 conf_gen:	$(CONF_GEN_DIR) $(CONF_GEN_FILES)
+
+.PHONY: install_include_dir
+install_include_dir:
+	install -d $(INCLUDE_INSTALL_PATH)
+
+.PHONY:	install
+install:	install_include_dir $(INCLUDES)
+	for inc in $(INCLUDES); do \
+		install -m 644 $$inc $(INCLUDE_INSTALL_PATH); \
+	done
 
 .PHONY: clean
 clean:

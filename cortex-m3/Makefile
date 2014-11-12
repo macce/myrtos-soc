@@ -38,6 +38,10 @@ all:	family_all $(SOC_OBJ_DIR) $(OBJECTS)
 
 conf_gen:	$(CONF_GEN_DIR) $(CONF_GEN_FILES) family_conf_gen
 
+.PHONY:	install
+install:
+	make -C STM32 install
+
 .PHONY: clean
 clean:
 	make -C $(FAMILY) clean
