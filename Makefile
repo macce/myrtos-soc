@@ -25,7 +25,7 @@ install_include_dir:
 	install -d $(INCLUDE_INSTALL_PATH)
 
 .PHONY:	install
-install:	install_include_dir $(INCLUDES)
+install:	all install_include_dir $(INCLUDES)
 	for inc in $(INCLUDES); do \
 		install -m 644 $$inc $(INCLUDE_INSTALL_PATH); \
 	done
